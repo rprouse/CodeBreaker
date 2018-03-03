@@ -8,8 +8,8 @@ namespace MasterMind
     public class Game
     {
         const char INCORRECT = '_';
-        const char INCORRECT_POS = 'C';
-        const char CORRECT_POS = 'X';
+        const char INCORRECT_POS = 'X';
+        const char CORRECT_POS = 'C';
 
         const string WIN = "You guessed correctly! Enter R to play again.";
         const string GUESS = "Enter four digits from 1 to 6 to guess the secret. Enter R to reset and play again.";
@@ -30,6 +30,7 @@ namespace MasterMind
             do
             {
                 OutputHeader();
+                OutputLegend();
                 OutputAnswer();
                 OutputGuesses();
                 OutputMessage();
@@ -44,9 +45,20 @@ namespace MasterMind
             Console.WriteLine();
         }
 
+        static void OutputLegend()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Legend");
+            Console.WriteLine();
+            Console.WriteLine($"{INCORRECT} - Incorrect guess");
+            Console.WriteLine($"{INCORRECT_POS} - Correct guess, but wrong position");
+            Console.WriteLine($"{CORRECT_POS} - Correct guess");
+        }
+
         void OutputAnswer()
         {
 #if true
+            Console.Write("Answer is ");
             foreach (char c in _answer)
                 Console.Write(c);
             Console.WriteLine();
@@ -56,10 +68,11 @@ namespace MasterMind
 
         void OutputGuesses()
         {
+            Console.ResetColor();
             int move = 1;
             foreach (var guess in _guesses)
             {
-                Console.WriteLine($"{move}. {guess[0]}{guess[1]}{guess[2]}{guess[3]} {Result(guess)}");
+                Console.WriteLine($"{move++}. {guess[0]}{guess[1]}{guess[2]}{guess[3]} {Result(guess)}");
             }
         }
 
@@ -109,7 +122,7 @@ namespace MasterMind
             var answer = (char[])_answer.Clone();
             for(int i = 0; i < 4; i++)
             {
-                if(answer[i] == guess[i])
+                if(guess[i] == answer[i])
                 {
                     result[i] = CORRECT_POS;
                     answer[i] = ' ';
@@ -117,9 +130,9 @@ namespace MasterMind
             }
             for (int i = 0; i < 4; i++)
             {
-                for (int j = i + 1; j < 4; j++)
+                for (int j = 0; j < 4; j++)
                 {
-                    if (answer[j] == guess[i])
+                    if (i != j && guess[i] == answer[j])
                     {
                         result[i] = INCORRECT_POS;
                         answer[j] = ' ';
