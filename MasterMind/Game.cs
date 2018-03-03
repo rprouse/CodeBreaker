@@ -12,7 +12,7 @@ namespace MasterMind
         const char CORRECT_POS = 'C';
 
         const string WIN = "You guessed correctly!";
-        const string GUESS = "Enter four digits from 1 to 6 to guess the secret.";
+        const string GUESS = "Enter four digits from 0 to 9 to guess the secret.";
         const string INVALID = "Invalid entry.";
         const string INSTRUCTIONS = "Enter R to reset and start again or Q to quit.";
 
@@ -107,7 +107,7 @@ namespace MasterMind
 
         bool ParseInput(string input)
         {
-            if (input.Length != 4 || input.Any(c => !"123456".Contains(c)))
+            if (input.Length != 4 || input.Any(c => !"0123456789".Contains(c)))
             {
                 _message = INVALID;
                 return false;
@@ -137,7 +137,7 @@ namespace MasterMind
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    if (i != j && guess[i] == answer[j])
+                    if (result[i] != CORRECT_POS && i != j && guess[i] == answer[j])
                     {
                         result[i] = INCORRECT_POS;
                         answer[j] = ' ';
