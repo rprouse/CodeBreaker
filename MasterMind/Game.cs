@@ -11,9 +11,10 @@ namespace MasterMind
         const char INCORRECT_POS = 'X';
         const char CORRECT_POS = 'C';
 
-        const string WIN = "You guessed correctly! Enter R to play again.";
-        const string GUESS = "Enter four digits from 1 to 6 to guess the secret. Enter R to reset and play again.";
-        const string INVALID = "Invalid entry. " + GUESS;
+        const string WIN = "You guessed correctly!";
+        const string GUESS = "Enter four digits from 1 to 6 to guess the secret.";
+        const string INVALID = "Invalid entry.";
+        const string INSTRUCTIONS = "Enter R to reset and start again or Q to quit.";
 
         Random _random = new Random();
         char[] _answer = new char[4];
@@ -53,11 +54,12 @@ namespace MasterMind
             Console.WriteLine($"{INCORRECT} - Incorrect guess");
             Console.WriteLine($"{INCORRECT_POS} - Correct guess, but wrong position");
             Console.WriteLine($"{CORRECT_POS} - Correct guess");
+            Console.WriteLine();
         }
 
         void OutputAnswer()
         {
-#if true
+#if false
             Console.Write("Answer is ");
             foreach (char c in _answer)
                 Console.Write(c);
@@ -78,13 +80,16 @@ namespace MasterMind
 
         void OutputMessage()
         {
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine();
             Console.WriteLine(_message);
+            Console.WriteLine(INSTRUCTIONS);
             Console.WriteLine();
         }
 
         bool Input()
         {
+            Console.ResetColor();
             Console.Write("> ");
             var input = Console.ReadLine().ToLowerInvariant();
             if (input == "r")
