@@ -42,7 +42,7 @@ namespace MasterMind
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("MasterMind");
+            Console.WriteLine("Code Breaker");
             Console.WriteLine();
         }
 
